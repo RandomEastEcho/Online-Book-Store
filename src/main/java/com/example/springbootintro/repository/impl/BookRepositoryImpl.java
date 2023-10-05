@@ -1,8 +1,10 @@
 package com.example.springbootintro.repository.impl;
 
+import com.example.springbootintro.exception.EntityNotFoundException;
 import com.example.springbootintro.model.Book;
 import com.example.springbootintro.repository.BookRepository;
 import java.util.List;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -46,6 +48,15 @@ public class BookRepositoryImpl implements BookRepository {
             return session.createQuery("FROM Book", Book.class).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can`t get all books from database!", e);
+        }
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(Book.class, id));
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Can`t find book by id: " + id);
         }
     }
 }
