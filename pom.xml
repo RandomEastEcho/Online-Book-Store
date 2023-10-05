@@ -117,7 +117,7 @@
                 </executions>
                 <configuration>
                     <configLocation>${maven.checkstyle.plugin.configLocation}</configLocation>
-                    <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+                    <suppressionsLocation>checkstyle.xml</suppressionsLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
                     <failsOnError>true</failsOnError>
