@@ -3,6 +3,7 @@ package com.example.springbootintro.controller;
 import com.example.springbootintro.dto.request.CreateBookRequestDto;
 import com.example.springbootintro.dto.response.BookDto;
 import com.example.springbootintro.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto createBook(@RequestBody CreateBookRequestDto bookDto) {
+    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
 }
