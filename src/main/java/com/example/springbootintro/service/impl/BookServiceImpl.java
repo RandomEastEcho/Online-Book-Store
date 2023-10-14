@@ -4,6 +4,7 @@ import com.example.springbootintro.dto.request.CreateBookRequestDto;
 import com.example.springbootintro.dto.response.BookDto;
 import com.example.springbootintro.exception.EntityNotFoundException;
 import com.example.springbootintro.mapper.BookMapper;
+import com.example.springbootintro.model.Book;
 import com.example.springbootintro.repository.BookRepository;
 import com.example.springbootintro.service.BookService;
 import java.util.List;
@@ -34,5 +35,22 @@ public class BookServiceImpl implements BookService {
     public BookDto getById(Long id) {
         return bookMapper.toDto(bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Can`t find book by id: " + id)));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    @Override
+    public BookDto update(Long id, CreateBookRequestDto bookRequestDto) {
+        Book book = bookRepository.findById(id).get();
+        book.setTitle(bookRequestDto.getTitle());
+        book.setAuthor(bookRequestDto.getAuthor());
+        book.setIsbn(bookRequestDto.getIsbn());
+        book.setPrice(bookRequestDto.getPrice());
+        book.setDescription(bookRequestDto.getDescription());
+        book.setCoverImage(bookRequestDto.getCoverImage());
+        return bookMapper.toDto(bookRepository.save(book));
     }
 }
