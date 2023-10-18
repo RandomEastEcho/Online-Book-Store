@@ -37,8 +37,8 @@ public class BookController {
     @GetMapping("/{id}")
     @Operation(summary = "Get book by id", description = "Get book by it`s id")
     public BookDto getBookById(@Parameter(
-            description = "id of searched book",
-            name = "id",
+            description = "Id of searched book",
+            name = "Id",
             required = true,
             example = "5"
             ) @PathVariable Long id) {
@@ -48,7 +48,7 @@ public class BookController {
     @PostMapping
     @Operation(summary = "Create a book", description = "Create a new book")
     public BookDto createBook(@Parameter(
-            description = "create a book",
+            description = "Create a book",
             required = true,
             content = @Content(schema = @Schema(implementation = CreateBookRequestDto.class))
             ) @RequestBody @Valid CreateBookRequestDto bookDto) {
@@ -58,8 +58,8 @@ public class BookController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete book", description = "Delete book by it`s id")
     public void deleteById(@Parameter(
-            description = "delete book by id",
-            name = "id",
+            description = "Delete book by id",
+            name = "Id",
             required = true,
             example = "3"
             ) @PathVariable Long id) {
@@ -69,12 +69,12 @@ public class BookController {
     @PutMapping("/{id}")
     @Operation(summary = "Update book", description = "Update existing book")
     public BookDto update(@Parameter(
-            description = "update book by id",
-            name = "id",
+            description = "Update book by id",
+            name = "Id",
             required = true,
             example = "1"
             ) @PathVariable Long id, @Parameter(
-                    description = "update book",
+                    description = "Update book",
                     required = true,
                     content =
                     @Content(schema = @Schema(implementation = CreateBookRequestDto.class))
