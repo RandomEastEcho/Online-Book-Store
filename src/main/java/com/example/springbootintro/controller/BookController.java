@@ -4,6 +4,9 @@ import com.example.springbootintro.dto.request.CreateBookRequestDto;
 import com.example.springbootintro.dto.response.BookDto;
 import com.example.springbootintro.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -33,26 +36,49 @@ public class BookController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get book by id", description = "Get book by it`s id")
-    public BookDto getBookById(@PathVariable Long id) {
+    public BookDto getBookById(@Parameter(
+            description = "id of searched book",
+            name = "id",
+            required = true,
+            example = "5"
+            ) @PathVariable Long id) {
         return bookService.getById(id);
     }
 
     @PostMapping
     @Operation(summary = "Create a book", description = "Create a new book")
-    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
+    public BookDto createBook(@Parameter(
+            description = "create a book",
+            required = true,
+            content = @Content(schema = @Schema(implementation = CreateBookRequestDto.class))
+            ) @RequestBody @Valid CreateBookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete book", description = "Delete book by it`s id")
-    public void deleteById(@PathVariable Long id) {
+    public void deleteById(@Parameter(
+            description = "delete book by id",
+            name = "id",
+            required = true,
+            example = "3"
+            ) @PathVariable Long id) {
         bookService.deleteById(id);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update book", description = "Update existing book")
-    public BookDto update(@PathVariable Long id,
-                          @RequestBody @Valid CreateBookRequestDto bookRequestDto) {
+    public BookDto update(@Parameter(
+            description = "update book by id",
+            name = "id",
+            required = true,
+            example = "1"
+            ) @PathVariable Long id, @Parameter(
+                    description = "update book",
+                    required = true,
+                    content =
+                    @Content(schema = @Schema(implementation = CreateBookRequestDto.class))
+            ) @RequestBody @Valid CreateBookRequestDto bookRequestDto) {
         return bookService.update(id, bookRequestDto);
     }
 }
