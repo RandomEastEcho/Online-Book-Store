@@ -1,7 +1,7 @@
 package com.example.springbootintro.controller;
 
-import com.example.springbootintro.dto.request.CreateBookRequestDto;
-import com.example.springbootintro.dto.response.BookDto;
+import com.example.springbootintro.dto.request.BookRequestDto;
+import com.example.springbootintro.dto.response.BookResponseDto;
 import com.example.springbootintro.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,13 +30,13 @@ public class BookController {
 
     @GetMapping
     @Operation(summary = "Get list of all books", description = "Get list of all books")
-    public List<BookDto> getAll(Pageable pageable) {
+    public List<BookResponseDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get book by id", description = "Get book by it`s id")
-    public BookDto getBookById(@Parameter(
+    public BookResponseDto getBookById(@Parameter(
             description = "Id of searched book",
             name = "Id",
             required = true,
@@ -47,11 +47,11 @@ public class BookController {
 
     @PostMapping
     @Operation(summary = "Create a book", description = "Create a new book")
-    public BookDto createBook(@Parameter(
+    public BookResponseDto createBook(@Parameter(
             description = "Create a book",
             required = true,
-            content = @Content(schema = @Schema(implementation = CreateBookRequestDto.class))
-            ) @RequestBody @Valid CreateBookRequestDto bookDto) {
+            content = @Content(schema = @Schema(implementation = BookRequestDto.class))
+            ) @RequestBody @Valid BookRequestDto bookDto) {
         return bookService.save(bookDto);
     }
 
@@ -68,7 +68,7 @@ public class BookController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update book", description = "Update existing book")
-    public BookDto update(@Parameter(
+    public BookResponseDto update(@Parameter(
             description = "Update book by id",
             name = "Id",
             required = true,
@@ -77,8 +77,8 @@ public class BookController {
                     description = "Update book",
                     required = true,
                     content =
-                    @Content(schema = @Schema(implementation = CreateBookRequestDto.class))
-            ) @RequestBody @Valid CreateBookRequestDto bookRequestDto) {
+                    @Content(schema = @Schema(implementation = BookRequestDto.class))
+            ) @RequestBody @Valid BookRequestDto bookRequestDto) {
         return bookService.update(id, bookRequestDto);
     }
 }

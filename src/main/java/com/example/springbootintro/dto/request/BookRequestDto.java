@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
-public class CreateBookRequestDto {
+public class BookRequestDto {
     @NotBlank(message = "Title field can`t be blank")
     private String title;
     @NotBlank(message = "Author field can`t be blank")
