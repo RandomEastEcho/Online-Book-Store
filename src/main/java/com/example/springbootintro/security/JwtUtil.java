@@ -8,15 +8,16 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JwtUtil {
-    private long expiration = 300000L;
-    //Temporary fix as I have problem with @Value - can`t find placeholder
-    private String secret = "test";
-    //Same
+    @Value("${jwt.expiration}")
+    private long expiration;
+    @Value("${jwt.secret}")
+    private String secret;
 
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()

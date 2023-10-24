@@ -6,6 +6,7 @@ import com.example.springbootintro.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -32,10 +33,18 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(antMatcher("/api/auth/**"))
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated())
+                        auth.requestMatchers(antMatcher("api/auth/**"))
+                        .permitAll()
+                        .requestMatchers(antMatcher(HttpMethod.GET,"/api/**"))
+                        .hasRole("USER")
+                        .requestMatchers(antMatcher(HttpMethod.POST,"/api/books"))
+                        .hasRole("ADMIN")
+                        .requestMatchers(antMatcher(HttpMethod.DELETE,"/api/books/**"))
+                        .hasRole("ADMIN")
+                        .requestMatchers(antMatcher(HttpMethod.PUT,"/api/books/**"))
+                        .hasRole("ADMIN")
+                        .anyRequest()
+                        .authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

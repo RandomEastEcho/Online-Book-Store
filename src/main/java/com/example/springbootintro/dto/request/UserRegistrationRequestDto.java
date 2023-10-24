@@ -1,10 +1,16 @@
 package com.example.springbootintro.dto.request;
 
+import com.example.springbootintro.lib.FieldsValueMatch;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
+@FieldsValueMatch(
+        field = "password",
+        fieldMatch = "repeatPassword",
+        message = "passwords don`t match"
+)
 public class UserRegistrationRequestDto {
     @NotBlank(message = "Email field can`t be blank")
     private String email;
