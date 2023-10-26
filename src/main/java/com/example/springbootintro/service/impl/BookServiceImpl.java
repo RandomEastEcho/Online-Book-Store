@@ -2,6 +2,7 @@ package com.example.springbootintro.service.impl;
 
 import com.example.springbootintro.dto.request.BookRequestDto;
 import com.example.springbootintro.dto.response.BookResponseDto;
+import com.example.springbootintro.dto.response.BookWithoutCategoryResponseDto;
 import com.example.springbootintro.exception.EntityNotFoundException;
 import com.example.springbootintro.mapper.BookMapper;
 import com.example.springbootintro.model.Book;
@@ -53,5 +54,13 @@ public class BookServiceImpl implements BookService {
         book.setDescription(bookRequestDto.getDescription());
         book.setCoverImage(bookRequestDto.getCoverImage());
         return bookMapper.toDto(bookRepository.save(book));
+    }
+
+    @Override
+    public List<BookWithoutCategoryResponseDto> findAllByCategoryId(Pageable pageable, Long id) {
+        return bookRepository.findAllByCategoriesId(id, pageable)
+                .stream()
+                .map(bookMapper::toDtoWithoutCategories)
+                .collect(Collectors.toList());
     }
 }
