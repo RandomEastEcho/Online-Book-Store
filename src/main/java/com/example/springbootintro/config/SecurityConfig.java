@@ -33,15 +33,18 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(antMatcher("api/auth/**"))
+                        auth.requestMatchers(antMatcher("/api/auth/**"))
                         .permitAll()
                         .requestMatchers(antMatcher(HttpMethod.GET,"/api/**"))
                         .hasRole("USER")
-                        .requestMatchers(antMatcher(HttpMethod.POST,"/api/books"))
+                        .requestMatchers(antMatcher(HttpMethod.POST,"/api/books"),
+                                antMatcher(HttpMethod.POST,"/api/categories"))
                         .hasRole("ADMIN")
-                        .requestMatchers(antMatcher(HttpMethod.DELETE,"/api/books/**"))
+                        .requestMatchers(antMatcher(HttpMethod.DELETE,"/api/books/**"),
+                                antMatcher(HttpMethod.DELETE,"/api/categories/**"))
                         .hasRole("ADMIN")
-                        .requestMatchers(antMatcher(HttpMethod.PUT,"/api/books/**"))
+                        .requestMatchers(antMatcher(HttpMethod.PUT,"/api/books/**"),
+                                antMatcher(HttpMethod.PUT,"/api/categories/**"))
                         .hasRole("ADMIN")
                         .anyRequest()
                         .authenticated())
