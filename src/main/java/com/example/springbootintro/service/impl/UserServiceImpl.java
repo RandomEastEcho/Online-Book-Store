@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByEmail(userRegistrationRequestDto.getEmail()).isPresent()) {
             throw new RegistrationException("User with email "
                     + userRegistrationRequestDto.getEmail()
-                    + "is already exist!");
+                    + "already exists!");
         }
         User user = userMapper.toModel(userRegistrationRequestDto);
         user.setRoles(Set.of(roleService.findByName(Role.RoleName.USER)));
