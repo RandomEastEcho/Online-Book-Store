@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,12 +33,14 @@ public class CategoryController {
     private final BookService bookService;
 
     @GetMapping
+    @Secured({"ADMIN","USER"})
     @Operation(summary = "Get list of all categories", description = "Get list of all categories")
     public List<CategoryResponseDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
+    @Secured({"ADMIN","USER"})
     @Operation(summary = "Get category by id", description = "Get category by it`s id")
     public CategoryResponseDto getCategoryById(@Parameter (
             description = "Id of searched category",
@@ -49,6 +52,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Secured("ADMIN")
     @Operation(summary = "Create a category", description = "Create a new Category")
     public CategoryResponseDto createCategory(@Parameter(
             description = "Create a category",
@@ -59,6 +63,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ADMIN")
     @Operation(summary = "Delete category", description = "Delete category by it`s id")
     public void deleteById(@Parameter(
             description = "Delete category by Id",
@@ -70,6 +75,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @Secured("ADMIN")
     @Operation(summary = "Update category", description = "Update existing category")
     public CategoryResponseDto update(@Parameter(
             description = "Update category by id",
@@ -86,6 +92,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/books")
+    @Secured({"ADMIN","USER"})
     @Operation(summary = "Get all books by category",
             description = "Get all books by category`s id")
     public List<BookWithoutCategoryResponseDto> getBooksByCategoryId(@Parameter(
