@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,12 +30,14 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
+    @Secured({"ADMIN","USER"})
     @Operation(summary = "Get list of all books", description = "Get list of all books")
     public List<BookResponseDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
     @GetMapping("/{id}")
+    @Secured({"ADMIN","USER"})
     @Operation(summary = "Get book by id", description = "Get book by it`s id")
     public BookResponseDto getBookById(@Parameter(
             description = "Id of searched book",
@@ -46,6 +49,7 @@ public class BookController {
     }
 
     @PostMapping
+    @Secured("ADMIN")
     @Operation(summary = "Create a book", description = "Create a new book")
     public BookResponseDto createBook(@Parameter(
             description = "Create a book",
@@ -56,6 +60,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ADMIN")
     @Operation(summary = "Delete book", description = "Delete book by it`s id")
     public void deleteById(@Parameter(
             description = "Delete book by id",
@@ -67,6 +72,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
+    @Secured("ADMIN")
     @Operation(summary = "Update book", description = "Update existing book")
     public BookResponseDto update(@Parameter(
             description = "Update book by id",
