@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class UserLoginRequestDto {
-    @NotBlank(message = "Login field can`t be empty")
+    @NotBlank(message = "User Login field can`t be empty")
     private String login;
-    @NotBlank(message = "Password field can`t be empty")
+    @NotBlank(message = "User Password field can`t be empty")
     private String password;
 }

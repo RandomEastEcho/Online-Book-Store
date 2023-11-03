@@ -41,7 +41,7 @@ public class User implements UserDetails {
     @ManyToMany
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JoinTable(name = "users_roles,",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
