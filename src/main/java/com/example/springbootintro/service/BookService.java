@@ -10,9 +10,9 @@ public interface BookService {
 
     List<BookResponseDto> findAll(Pageable pageable);
 
-    BookResponseDto getById(Long id);
+    BookResponseDto getById(Long bookId);
 
-    void deleteById(Long id);
+    void deleteById(Long bookId);
 
     BookResponseDto update(Long id, BookRequestDto bookRequestDto);
 }

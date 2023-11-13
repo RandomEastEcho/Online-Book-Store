@@ -9,6 +9,7 @@ import com.example.springbootintro.model.Role;
 import com.example.springbootintro.model.User;
 import com.example.springbootintro.repository.UserRepository;
 import com.example.springbootintro.service.RoleService;
+import com.example.springbootintro.service.ShoppingCartService;
 import com.example.springbootintro.service.UserService;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleService roleService;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto userRegistrationRequestDto)
@@ -31,7 +33,9 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toModel(userRegistrationRequestDto);
         user.setRoles(Set.of(roleService.findByName(Role.RoleName.USER)));
-        return userMapper.toDto(userRepository.save(user));
+        User newUser = userRepository.save(user);
+        shoppingCartService.save(newUser.getId());
+        return userMapper.toDto(newUser);
     }
 
     @Override
