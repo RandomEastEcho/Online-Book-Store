@@ -36,12 +36,12 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(name = "shipping_adress")
+    @Column(name = "shipping_address")
     private String shippingAddress;
     @ManyToMany
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JoinTable(name = "users_roles,",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
