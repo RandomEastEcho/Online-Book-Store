@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-cart-item
+      id: create-cart-item-table
       author: Gleb Iaroshevych
       changes:
         - createTable:
