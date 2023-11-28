@@ -17,5 +17,5 @@ public interface ShoppingCartService {
 
     ShoppingCartResponseDto deleteBookFromCart(Long cartItemId, Long userId);
 
-    ShoppingCart getModelById(Long id);
+    ShoppingCart getModelById(Long userId);
 }

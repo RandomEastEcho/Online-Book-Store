@@ -38,10 +38,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderResponseDto save(Long userId, String shippingAddress) {
         Order order = createNewOrder(userId, shippingAddress);
-        ShoppingCart shoppingCart = shoppingCartService.getModelById(userId);
-        Set<OrderItem> orderItems = createItemsForOrder(order, shoppingCart);
-        order.setOrderItems(orderItems);
-        order.setTotal(getTotal(orderItems));
         return orderMapper.toDto(orderRepository.save(order));
     }
 
@@ -89,6 +85,10 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(user);
         order.setShippingAddress(shippingAddress);
         order.setTotal(BigDecimal.ZERO);
+        ShoppingCart shoppingCart = shoppingCartService.getModelById(userId);
+        Set<OrderItem> orderItems = createItemsForOrder(order, shoppingCart);
+        order.setOrderItems(orderItems);
+        order.setTotal(getTotal(orderItems));
         return orderRepository.save(order);
     }
 

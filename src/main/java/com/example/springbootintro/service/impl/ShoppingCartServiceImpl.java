@@ -62,9 +62,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart getModelById(Long id) {
-        return shoppingCartRepository.findByUserId(id).orElseThrow(() ->
-                new EntityNotFoundException("Can`t find shopping cart by user id: " + id));
+    public ShoppingCart getModelById(Long userId) {
+        return shoppingCartRepository.findByUserId(userId).orElseThrow(() ->
+                new EntityNotFoundException("Can`t find shopping cart by user id: " + userId));
     }
 
     private User getUserById(Long id) {

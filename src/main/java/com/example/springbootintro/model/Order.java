@@ -16,8 +16,10 @@ import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.annotations.SQLDelete;
 
 @Entity
+@SQLDelete(sql = "UPDATE  orders SET is_deleted = true WHERE id=?")
 @Data
 @Table(name = "orders")
 public class Order {
@@ -41,6 +43,8 @@ public class Order {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<OrderItem> orderItems;
+    @Column(nullable = false, name = "is_deleted")
+    private boolean isDeleted;
 
     public enum Status {
         COMPLETED,
