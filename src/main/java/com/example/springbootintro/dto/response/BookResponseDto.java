@@ -1,7 +1,6 @@
 package com.example.springbootintro.dto.response;
 
 import java.math.BigDecimal;
-import java.util.Set;
 import lombok.Data;
 
 @Data
@@ -13,5 +12,4 @@ public class BookResponseDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Set<Long> categoriesId;
 }

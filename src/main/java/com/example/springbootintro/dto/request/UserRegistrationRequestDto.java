@@ -12,16 +12,16 @@ import lombok.Data;
         message = "passwords don`t match"
 )
 public class UserRegistrationRequestDto {
-    @NotBlank(message = "User Email field can`t be blank")
+    @NotBlank(message = "Email field can`t be blank")
     private String email;
     @NotBlank
-    @Size(min = 8, message = "User Password must be at least 8 characters")
+    @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
     private String repeatPassword;
-    @NotBlank(message = "User First name field can`t be blank")
+    @NotBlank(message = "First name field can`t be blank")
     private String firstName;
-    @NotBlank(message = "User Last name field can`t be blank")
+    @NotBlank(message = "Last name field can`t be blank")
     private String lastName;
-    @NotBlank(message = "User Shipping address field can`t be blank")
+    @NotBlank(message = "Shipping address field can`t be blank")
     private String shippingAddress;
 }
