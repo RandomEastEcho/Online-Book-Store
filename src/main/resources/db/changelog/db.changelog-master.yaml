@@ -13,3 +13,5 @@ databaseChangeLog:
       file: db/changelog/changes/06-create-order-table.yaml
   - include:
       file: db/changelog/changes/07-create-order-item-table.yaml
+  - include:
+      file: db/changelog/changes/08-create-categories-table.yaml

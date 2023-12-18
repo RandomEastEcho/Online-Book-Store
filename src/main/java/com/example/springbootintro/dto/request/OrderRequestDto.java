@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class OrderRequestDto {
-    @NotBlank(message = "ShippingAddress field can`t be blank")
+    @NotBlank(message = "Order ShippingAddress field can`t be blank")
     private String shippingAddress;
 }
