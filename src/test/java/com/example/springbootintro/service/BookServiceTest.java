@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,10 +31,8 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
-
-    private Book testBook;
-    private BookRequestDto testRequestDto;
-    private BookResponseDto expectedResponse;
+    private final BookRequestDto testRequestDto = new BookRequestDto();
+    private final BookResponseDto expectedResponse = new BookResponseDto();
 
     @Mock
     private BookRepository bookRepository;
@@ -46,23 +43,9 @@ class BookServiceTest {
     @InjectMocks
     private BookServiceImpl bookService;
 
-    @BeforeEach
-    public void init() {
-        testBook = new Book();
-        testBook.setId(1L);
-        testBook.setTitle("testTitle");
-        testBook.setAuthor("testAuthor");
-        testBook.setIsbn("testISBN");
-        testBook.setPrice(BigDecimal.ONE);
-        testBook.setDescription("testDescription");
-        testBook.setCoverImage("testCoverImage");
-        testRequestDto = new BookRequestDto();
-        expectedResponse = new BookResponseDto();
-    }
-
     @Test
     void save_saveBook_ok() {
-
+        Book testBook = createBook();
         when(bookMapper.toModel(testRequestDto)).thenReturn(testBook);
         when(bookRepository.save(testBook)).thenReturn(testBook);
         when(bookMapper.toDto(testBook)).thenReturn(expectedResponse);
@@ -90,6 +73,7 @@ class BookServiceTest {
 
     @Test
     void getById_getBookById_ok() {
+        Book testBook = createBook();
         when(bookRepository.findById(testBook.getId())).thenReturn(Optional.of(testBook));
         when(bookMapper.toDto(testBook)).thenReturn(expectedResponse);
 
@@ -109,6 +93,7 @@ class BookServiceTest {
 
     @Test
     void deleteById_deleteBookById_ok() {
+        Book testBook = createBook();
         bookService.deleteById(testBook.getId());
 
         verify(bookRepository, times(1)).deleteById(testBook.getId());
@@ -116,6 +101,7 @@ class BookServiceTest {
 
     @Test
     void update_updateBook_ok() {
+        Book testBook = createBook();
         Book updatedBook = new Book();
 
         when(bookRepository.findById(testBook.getId())).thenReturn(Optional.of(testBook));
@@ -141,7 +127,6 @@ class BookServiceTest {
     void findAllByCategoryId_findAllBooksByCategoryId_ok() {
         Pageable pageable = mock(Pageable.class);
         List<Book> books = Arrays.asList(new Book(), new Book());
-        Page<Book> bookPage = new PageImpl<>(books);
         Long existingCategoryId = 1L;
         List<BookWithoutCategoryResponseDto> expectedResponse =
                 Arrays.asList(new BookWithoutCategoryResponseDto(),
@@ -155,5 +140,17 @@ class BookServiceTest {
                 bookService.findAllByCategoryId(pageable, existingCategoryId);
 
         assertEquals(expectedResponse.size(), actualResponse.size());
+    }
+
+    private Book createBook() {
+        Book book = new Book();
+        book.setId(1L);
+        book.setTitle("testTitle");
+        book.setAuthor("testAuthor");
+        book.setIsbn("testISBN");
+        book.setPrice(BigDecimal.ONE);
+        book.setDescription("testDescription");
+        book.setCoverImage("testCoverImage");
+        return book;
     }
 }

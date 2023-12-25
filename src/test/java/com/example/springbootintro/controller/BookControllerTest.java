@@ -119,7 +119,7 @@ public class BookControllerTest {
     @Sql(scripts = "classpath:database/book/remove-books-from-table.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void createBook_createNewBook_ok() throws Exception {
-        BookRequestDto testBook = createABook();
+        BookRequestDto testBook = createBook();
         String jsonObject = objectMapper.writeValueAsString(testBook);
         mockMvc.perform(post("/api/books/")
                 .content(jsonObject)
@@ -134,7 +134,7 @@ public class BookControllerTest {
 
     @Test
     void createBook_createNewBookUnauthorizedUser_notOk() throws Exception {
-        BookRequestDto testBook = createABook();
+        BookRequestDto testBook = createBook();
         String jsonObject = objectMapper.writeValueAsString(testBook);
         mockMvc.perform(post("/api/books/")
                         .content(jsonObject)
@@ -180,7 +180,7 @@ public class BookControllerTest {
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void update_updateBookById_ok() throws Exception {
         Long bookId = 1L;
-        BookRequestDto testBook = createABook();
+        BookRequestDto testBook = createBook();
         String jsonObject = objectMapper.writeValueAsString(testBook);
 
         mockMvc.perform(put("/api/books/" + bookId)
@@ -197,7 +197,7 @@ public class BookControllerTest {
     @Test
     void update_updateBookUnauthorizedUser_notOk() throws Exception {
         Long bookId = 1L;
-        BookRequestDto testBook = createABook();
+        BookRequestDto testBook = createBook();
         String jsonObject = objectMapper.writeValueAsString(testBook);
         mockMvc.perform(put("/api/books/" + bookId)
                         .content(jsonObject)
@@ -205,7 +205,7 @@ public class BookControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    private BookRequestDto createABook() {
+    private BookRequestDto createBook() {
         BookRequestDto newBook = new BookRequestDto();
         newBook.setTitle("testTitle");
         newBook.setAuthor("testTitle");

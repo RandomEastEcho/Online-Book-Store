@@ -18,7 +18,6 @@ import com.example.springbootintro.service.impl.CategoryServiceImpl;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,9 +29,8 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 public class CategoryServiceTest {
-    private Category testCategory;
-    private CategoryRequestDto testRequestDto;
-    private CategoryResponseDto expectedResponse;
+    private final CategoryRequestDto testRequestDto = new CategoryRequestDto();
+    private final CategoryResponseDto expectedResponse = new CategoryResponseDto();
 
     @Mock
     private CategoryRepository categoryRepository;
@@ -43,18 +41,9 @@ public class CategoryServiceTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
-    @BeforeEach
-    public void init() {
-        testCategory = new Category();
-        testCategory.setId(1L);
-        testCategory.setName("testName");
-        testCategory.setDescription("testDescription");
-        testRequestDto = new CategoryRequestDto();
-        expectedResponse = new CategoryResponseDto();
-    }
-
     @Test
     void save_saveCategory_ok() {
+        Category testCategory = createCategory();
         when(categoryMapper.toModel(testRequestDto)).thenReturn(testCategory);
         when(categoryRepository.save(testCategory)).thenReturn(testCategory);
         when(categoryMapper.toDto(testCategory)).thenReturn(expectedResponse);
@@ -82,6 +71,7 @@ public class CategoryServiceTest {
 
     @Test
     void getById_getCategoryById_ok() {
+        Category testCategory = createCategory();
         when(categoryRepository.findById(testCategory.getId()))
                 .thenReturn(Optional.of(testCategory));
         when(categoryMapper.toDto(testCategory)).thenReturn(expectedResponse);
@@ -102,6 +92,7 @@ public class CategoryServiceTest {
 
     @Test
     void deleteById_deleteCategoryById_ok() {
+        Category testCategory = createCategory();
         categoryService.deleteById(testCategory.getId());
 
         verify(categoryRepository, times(1)).deleteById(testCategory.getId());
@@ -110,6 +101,7 @@ public class CategoryServiceTest {
     @Test
     void update_updateCategory_ok() {
         Category updatedCategory = new Category();
+        Category testCategory = createCategory();
 
         when(categoryRepository.findById(testCategory.getId()))
                 .thenReturn(Optional.of(testCategory));
@@ -130,5 +122,13 @@ public class CategoryServiceTest {
 
         assertThrows(EntityNotFoundException.class, () -> categoryService.getById(nonExistingId));
         verify(categoryRepository, times(1)).findById(nonExistingId);
+    }
+
+    private Category createCategory() {
+        Category category = new Category();
+        category.setId(1L);
+        category.setName("testName");
+        category.setDescription("testDescription");
+        return category;
     }
 }

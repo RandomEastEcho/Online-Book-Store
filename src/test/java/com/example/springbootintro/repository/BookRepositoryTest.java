@@ -26,7 +26,6 @@ public class BookRepositoryTest {
     public void findAllByCategoriesId_FindAllBooksByCategoriesId_ok() {
         List<Book> actual = bookRepository.findAllByCategoriesId(1L, PageRequest.of(0, 10));
         assertEquals(1, actual.size());
-        assertEquals(bookRepository.findById(1L), Optional.of(actual.get(0)));
+        assertEquals(bookRepository.findById(1L).get(), Optional.of(actual.get(0)).get());
     }
-
 }

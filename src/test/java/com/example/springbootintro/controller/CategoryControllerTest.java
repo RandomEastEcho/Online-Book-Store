@@ -69,7 +69,7 @@ public class CategoryControllerTest {
     @Sql(scripts = "classpath:database/category/remove-categories-from-table.sql",
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void createCategory_createNewCategory_ok() throws Exception {
-        CategoryRequestDto testCategory = createACategory();
+        CategoryRequestDto testCategory = createCategory();
         String jsonObject = objectMapper.writeValueAsString(testCategory);
         mockMvc.perform(post("/api/categories/")
                         .content(jsonObject)
@@ -82,7 +82,7 @@ public class CategoryControllerTest {
 
     @Test
     void createCategory_createNewCategoryUnauthorizedUser_notOk() throws Exception {
-        CategoryRequestDto testCategory = createACategory();
+        CategoryRequestDto testCategory = createCategory();
         String jsonObject = objectMapper.writeValueAsString(testCategory);
         mockMvc.perform(post("/api/categories/")
                         .content(jsonObject)
@@ -128,7 +128,7 @@ public class CategoryControllerTest {
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void updateCategory_updateCategoryById_ok() throws Exception {
         Long categoryId = 1L;
-        CategoryRequestDto testCategory = createACategory();
+        CategoryRequestDto testCategory = createCategory();
         String jsonObject = objectMapper.writeValueAsString(testCategory);
 
         mockMvc.perform(put("/api/categories/" + categoryId)
@@ -143,7 +143,7 @@ public class CategoryControllerTest {
     @Test
     void updateCategory_updateCategoryUnauthorizedUser_notOk() throws Exception {
         Long categoryId = 1L;
-        CategoryRequestDto testCategory = createACategory();
+        CategoryRequestDto testCategory = createCategory();
         String jsonObject = objectMapper.writeValueAsString(testCategory);
         mockMvc.perform(put("/api/categories/" + categoryId)
                         .content(jsonObject)
@@ -177,7 +177,7 @@ public class CategoryControllerTest {
                 .andExpect(status().isUnauthorized());
     }
 
-    private CategoryRequestDto createACategory() {
+    private CategoryRequestDto createCategory() {
         CategoryRequestDto newCategory = new CategoryRequestDto();
         newCategory.setName("testName");
         newCategory.setDescription("testDescription");
