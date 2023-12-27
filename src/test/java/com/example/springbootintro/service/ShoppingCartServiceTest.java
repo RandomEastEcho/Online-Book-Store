@@ -133,6 +133,9 @@ public class ShoppingCartServiceTest {
         ShoppingCartResponseDto result = shoppingCartService.addBook(cartItemRequestDto);
 
         assertNotNull(result);
+        assertEquals(expectedResponse.getId(), result.getId());
+        assertEquals(expectedResponse.getUserId(), result.getUserId());
+        assertEquals(expectedResponse.getCartItemResponseDtos(), result.getCartItemResponseDtos());
         verify(cartItemRepository, times(1)).save(testCartItem);
         verify(shoppingCartRepository, times(1)).save(testShoppingCart);
         verify(shoppingCartMapper, times(1)).toDto(testShoppingCart);
