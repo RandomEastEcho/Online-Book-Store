@@ -1,4 +1,4 @@
-﻿# Online Library
+﻿# Online Book Store
 
  This project aims to deliver best experience of book store, to passion book lovers and readers, right from your house! With usage of <code>JWT</code> tokens to ensure that your time will be not only fun but safe in same time. All users are divided in two categroies <code>ADMIN</code> and <code>USER</code> with different access and rights in this app. Made with use of general <code>REST</code> principles. 
 
