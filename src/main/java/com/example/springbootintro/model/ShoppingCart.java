@@ -26,8 +26,7 @@ public class ShoppingCart {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_items_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "shoppingCart")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<CartItem> cartItems;
